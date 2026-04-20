@@ -18,8 +18,7 @@ def make_print_status(status_text):
     Args:
         status_text (str): A short message to show what the program is doing.
     """
-    pass
-
+    print(f"[STATUS] {status_text}")
 # Task 2: Create the flower dataset
 
 

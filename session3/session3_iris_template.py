@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 
 
 # Session 2 continuity variables (Rule settings). Do not change these.
@@ -14,6 +15,12 @@ wrong = 0        # Count of wrong predictions
 total = 0        # Total samples processed
 y_pred_list = []  # List of all predictions made
 
+=======
+correct = 0
+wrong = 0
+total = 0
+y_pred_list = []
+>>>>>>> Stashed changes
 
 flower1 = {
     "id": "flower1",
@@ -24,26 +31,41 @@ flower1 = {
     "species": "setosa"
 }
 
-# Task 1: Create A dictionary for second flower
+flower2 = {
+    "id": "flower2",
+    "sepal_length": 4.9,
+    "sepal_width": 3.0,
+    "petal_length": 1.4,
+    "petal_width": 0.2,
+    "species": "setosa"
+}
 
-# flower2 = {
-# "id": "flower2",
-# <your code here>: 4.9,
-# <your code here> add key value
-# "species": "setosa"
-# <your code here> remember to close me for a dict
+dataset = [flower1, flower2]
 
+threshold = 2.5
+positive_label = "setosa"
+negative_label = "versicolor"
 
-# Task 2: Create list of dictionaries
-# dataset= <your code here>
+for sample in dataset:
+    if sample["petal_length"] < threshold:
+        y_pred = positive_label
+    else:
+        y_pred = negative_label
 
+    y_pred_list.append(y_pred)
+    total += 1
 
-# Task 3: Create a for loop to process the dataset
-# for <your code here> in dataset:
-#     print(<your code here>["id"], <your code here>["petal_length"], <your code here>["species"])
+    if y_pred == sample["species"]:
+        correct += 1
+    else:
+        wrong += 1
 
-# Task 4: Use an if-else statement to classify each sample
-# if <your code here>["petal_length"] < threshold:
-#     y_pred = positive_label
-# <your code here>
-#     <your code here> = negative_label
+    print(f'id={sample["id"]} | true={sample["species"]} | pred={y_pred} | petal_length={sample["petal_length"]}')
+
+accuracy = (correct / total) * 100
+
+print(f"Correct: {correct}")
+print(f"Wrong: {wrong}")
+print(f"Total: {total}")
+print(f"Accuracy (%): {accuracy}")
+print(f"All predictions: {y_pred_list}")
