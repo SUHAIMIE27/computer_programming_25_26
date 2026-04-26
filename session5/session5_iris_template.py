@@ -31,7 +31,7 @@ def setup_application_list():
 
 
 # Task 1: Refactor calculate_accuracy to use keyword-friendly defaults
-def calculate_accuracy(correct=< your_code >, total=< your_code >):
+def calculate_accuracy(correct=0, total=0):
     """Calculate the accuracy percentage."""
     if total > 0:
         accuracy = (correct / total) * 100
@@ -41,22 +41,8 @@ def calculate_accuracy(correct=< your_code >, total=< your_code >):
     return accuracy
 
 
-def compute_threshold_prediction(sample, threshold):
-    """Predict the label for one flower sample using the threshold rule."""
-    if sample["petal_length"] < threshold:
-        return POSITIVE_LABEL
-    return NEGATIVE_LABEL
-
-
-def derive_true_label(sample):
-    """Convert the real species into the lesson label."""
-    if sample["species"] == POSITIVE_LABEL:
-        return POSITIVE_LABEL
-    return NEGATIVE_LABEL
-
-
 # Task 2: Rename setup_application to run_classifier_pipeline
-def setup_application(threshold=< your_code >, print_each=< your_code >):
+def setup_application(threshold=2.0, print_each=True):
     """Run the full classifier pipeline and compute accuracy."""
     dataset = setup_application_list()
     correct, wrong, total, y_pred_list = run_prediction_loop(
@@ -69,8 +55,7 @@ def setup_application(threshold=< your_code >, print_each=< your_code >):
 
 
 # Task 3: Refactor run_prediction_loop to combine positional and keyword arguments
-def run_prediction_loop(dataset, threshold=< your_code >, print_each=< your_code >):
-    """Run the prediction loop with the chosen threshold."""
+def run_prediction_loop(dataset, threshold=2.0, print_each=True):
     correct = 0
     wrong = 0
     total = 0
@@ -81,6 +66,7 @@ def run_prediction_loop(dataset, threshold=< your_code >, print_each=< your_code
     for sample in dataset:
         y_pred = compute_threshold_prediction(sample, threshold)
         y_true = derive_true_label(sample)
+
         correct, wrong, total, y_pred_list = update_result_counts(
             correct,
             wrong,
@@ -98,10 +84,8 @@ def run_prediction_loop(dataset, threshold=< your_code >, print_each=< your_code
 
     return correct, wrong, total, y_pred_list
 
-
 # Task 4: Use update_result_counts with combined positional and keyword arguments
 def update_result_counts(correct, wrong, total, y_pred_list, y_pred, y_true):
-    """Update the counters and prediction list for one sample."""
     if y_pred == y_true:
         correct += 1
     else:
@@ -112,51 +96,31 @@ def update_result_counts(correct, wrong, total, y_pred_list, y_pred, y_true):
 
     return correct, wrong, total, y_pred_list
 
-
-def print_summary(correct, wrong, total, y_pred_list, accuracy):
-    """Print the final results after the loop is finished."""
-    print("\n=== Session 5 Summary ===")
-    print("Correct:", correct)
-    print("Wrong:", wrong)
-    print("Total:", total)
-    print("Accuracy (%):", round(accuracy, 2))
-    print("All predictions:", y_pred_list)
-
-
 def main():
     """Run the Session 5 experiments."""
 
-    # Task 5: Add the default run in main()
-    # <your_code>: uncomment the default run block below
-    # make_print_status("Default run")
-    # correct, wrong, total, y_pred_list, accuracy = run_classifier_pipeline()
-    # print_summary(correct, wrong, total, y_pred_list, accuracy)
+    # Task 5: Default run
+    make_print_status("Default run")
+    correct, wrong, total, y_pred_list, accuracy = run_classifier_pipeline()
+    print_summary(correct, wrong, total, y_pred_list, accuracy)
 
-    # Task 6: Add the positional override run in main()
-    # <your_code>: uncomment the positional override run below
-    # make_print_status("Positional override run")
-    # correct, wrong, total, y_pred_list, accuracy = run_classifier_pipeline(1.8, False)
-    # print_summary(correct, wrong, total, y_pred_list, accuracy)
+    # Task 6: Positional override
+    make_print_status("Positional override run")
+    correct, wrong, total, y_pred_list, accuracy = run_classifier_pipeline(1.8, False)
+    print_summary(correct, wrong, total, y_pred_list, accuracy)
 
-    # Task 7: Add the keyword override run in main()
-    # <your_code>: uncomment the keyword override run below
-    # make_print_status("Keyword override run")
-    # correct, wrong, total, y_pred_list, accuracy = run_classifier_pipeline(
-    #     threshold=1.8,
-    #     print_each=False,
-    # )
-    # print_summary(correct, wrong, total, y_pred_list, accuracy)
+    # Task 7: Keyword override
+    make_print_status("Keyword override run")
+    correct, wrong, total, y_pred_list, accuracy = run_classifier_pipeline(
+        threshold=1.8,
+        print_each=False,
+    )
+    print_summary(correct, wrong, total, y_pred_list, accuracy)
 
-    # Task 8: Add the reordered keyword run in main()
-    # <your_code>: uncomment the reordered keyword run below
-    # make_print_status("Reordered keyword run")
-    # correct, wrong, total, y_pred_list, accuracy = run_classifier_pipeline(
-    #     print_each=False,
-    #     threshold=1.8,
-    # )
-    # print_summary(correct, wrong, total, y_pred_list, accuracy)
-    pass
-
-
-if __name__ == "__main__":
-    main()
+    # Task 8: Reordered keyword
+    make_print_status("Reordered keyword run")
+    correct, wrong, total, y_pred_list, accuracy = run_classifier_pipeline(
+        print_each=False,
+        threshold=1.8,
+    )
+    print_summary(correct, wrong, total, y_pred_list, accuracy)
